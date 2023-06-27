@@ -1,0 +1,11 @@
+[package]
+name = "toolkit-ffi"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[build-dependencies]
+cbindgen = "0.24.0"
+
+[dependencies]
+libc = "0.2.144"

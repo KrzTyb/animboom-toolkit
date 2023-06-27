@@ -1,0 +1,8 @@
+# Binary dir
+/target
+
+# VSCode directories
+.vscode
+
+# Cargo.lock is not needed for libs
+Cargo.lock

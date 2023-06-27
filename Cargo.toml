@@ -1,0 +1,20 @@
+[package]
+name = "animboom-toolkit"
+version = "0.1.0"
+
+[workspace.package]
+edition = "2021"
+authors = ["Krzysztof Tyburski <krzysztof.tyb@gmail.com>"]
+members = [
+    "crates/*"
+]
+version = "0.1.0"
+
+
+[dependencies]
+toolkit-ffi = { path = "crates/ffi" }
+
+[features]
+
+[lib]
+crate-type=["lib", "staticlib", "cdylib"]
