@@ -1,11 +1,20 @@
 extern crate cbindgen;
 
-use std::env;
+use std::{env, path::PathBuf};
 
-const BINDINGS_FILE_PATH: &str = "target/include/animboomtoolkit.h";
+const BINDINGS_FILE_PATH: &str = "target/include";
+const BINDINGS_FILE_NAME: &str = "animboomtoolkit.h";
 
 fn main() {
     let crate_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+
+    let mut bindings_outdir = PathBuf::new().join(BINDINGS_FILE_PATH);
+
+    if let Ok(custom_bindings_outdir) = env::var("TOOLKIT_BINDINGS_PATH") {
+        bindings_outdir = PathBuf::new().join(custom_bindings_outdir);
+    };
+
+    let bindings_path = bindings_outdir.join(BINDINGS_FILE_NAME);
 
     let config = cbindgen::Config {
         header: Some("// Automatically generated C bindings for animboom-toolkit".into()),
@@ -24,7 +33,7 @@ fn main() {
         .with_config(config)
         .generate()
         .expect("Unable to generate bindings")
-        .write_to_file(BINDINGS_FILE_PATH);
+        .write_to_file(bindings_path);
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=src/lib.rs");
 }
