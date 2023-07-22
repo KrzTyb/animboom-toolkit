@@ -7,8 +7,7 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    if env::var("CARGO_FEATURE_ffi").is_ok() {
-        println!("Generating FFI bindings");
+    if env::var("CARGO_FEATURE_FFI").is_ok() {
         #[cfg(feature = "ffi")]
         generate_ffi_bindings();
     };
