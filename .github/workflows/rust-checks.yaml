@@ -1,0 +1,33 @@
+name: build
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cargo fmt
+        run: cargo fmt
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cargo clippy
+        run: cargo clippy --workspace --all-features
+
+      - name: Cargo build
+        run: cargo build --workspace --all-features
+
+      - name: Cargo test
+        run: cargo test --workspace --all-features
