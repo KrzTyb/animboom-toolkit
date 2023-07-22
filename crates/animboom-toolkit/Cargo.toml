@@ -1,0 +1,14 @@
+[package]
+name = "animboom-toolkit"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+
+[dependencies]
+animboom-core = { path = "../animboom-core" }
+
+[features]
+
+[lib]
+crate-type=["lib", "staticlib", "cdylib"]

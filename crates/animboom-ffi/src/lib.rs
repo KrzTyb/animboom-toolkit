@@ -1,3 +1,6 @@
+pub mod project;
+pub mod types;
+
 extern crate libc;
 
 const VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), "\0");

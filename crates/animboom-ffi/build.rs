@@ -34,6 +34,4 @@ fn main() {
         .generate()
         .expect("Unable to generate bindings")
         .write_to_file(bindings_path);
-    println!("cargo:rerun-if-changed=build.rs");
-    println!("cargo:rerun-if-changed=src/lib.rs");
 }
