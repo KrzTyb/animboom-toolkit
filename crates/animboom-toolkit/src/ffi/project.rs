@@ -1,4 +1,4 @@
-use super::types;
+use super::*;
 use std::ffi::CStr;
 extern crate libc;
 
@@ -15,9 +15,7 @@ extern crate libc;
 /// `path` argument shouldn't be a null pointer
 ///
 pub unsafe extern "C" fn ABT_new_project(path: *const libc::c_char) -> types::ABTProjectHandle {
-    let project = Box::new(animboom_toolkit::new_project(
-        into_correct_path(path).as_str(),
-    ));
+    let project = Box::new(crate::new_project(into_correct_path(path).as_str()));
     Box::into_raw(project).into()
 }
 
@@ -34,9 +32,7 @@ pub unsafe extern "C" fn ABT_new_project(path: *const libc::c_char) -> types::AB
 /// `path` argument shouldn't be a null pointer
 ///
 pub unsafe extern "C" fn ABT_open_project(path: *const libc::c_char) -> types::ABTProjectHandle {
-    let project = Box::new(animboom_toolkit::open_project(
-        into_correct_path(path).as_str(),
-    ));
+    let project = Box::new(crate::open_project(into_correct_path(path).as_str()));
     Box::into_raw(project).into()
 }
 
@@ -52,8 +48,8 @@ pub unsafe extern "C" fn ABT_open_project(path: *const libc::c_char) -> types::A
 ///
 pub unsafe extern "C" fn ABT_close_project(project_handle: types::ABTProjectHandle) {
     assert!(!project_handle.0.is_null(), "Null pointer!");
-    let project = Box::from_raw(project_handle.0 as *mut animboom_toolkit::types::AnimBoomProject);
-    animboom_toolkit::close_project(*project);
+    let project = Box::from_raw(project_handle.0 as *mut crate::types::AnimBoomProject);
+    crate::close_project(*project);
 }
 
 fn into_correct_path(path: *const libc::c_char) -> String {

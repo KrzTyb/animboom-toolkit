@@ -4,11 +4,20 @@ version.workspace = true
 edition.workspace = true
 authors.workspace = true
 
+[features]
+# Include nothing by default
+default = []
+ffi = ["dep:libc", "dep:cbindgen"]
 
 [dependencies]
 animboom-core = { path = "../animboom-core" }
+libc = { version = "0.2.144", optional = true }
 
-[features]
+[build-dependencies]
+cbindgen = { version = "0.24.0", optional = true }
+
+[dev-dependencies]
+assert2 = "0.3.11"
 
 [lib]
 crate-type=["lib", "staticlib", "cdylib"]

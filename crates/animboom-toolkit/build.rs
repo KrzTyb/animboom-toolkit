@@ -1,11 +1,24 @@
+#[cfg(feature = "ffi")]
 extern crate cbindgen;
 
-use std::{env, path::PathBuf};
+use std::env;
 
-const BINDINGS_FILE_PATH: &str = "target/include";
-const BINDINGS_FILE_NAME: &str = "animboomtoolkit.h";
+#[cfg(feature = "ffi")]
+use std::path::PathBuf;
 
 fn main() {
+    if env::var("CARGO_FEATURE_ffi").is_ok() {
+        println!("Generating FFI bindings");
+        #[cfg(feature = "ffi")]
+        generate_ffi_bindings();
+    };
+}
+
+#[cfg(feature = "ffi")]
+fn generate_ffi_bindings() {
+    const BINDINGS_FILE_PATH: &str = "target/include";
+    const BINDINGS_FILE_NAME: &str = "animboomtoolkit.h";
+
     let crate_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
 
     let mut bindings_outdir = PathBuf::new().join(BINDINGS_FILE_PATH);
